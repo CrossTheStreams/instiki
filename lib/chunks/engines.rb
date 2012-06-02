@@ -20,10 +20,10 @@ module Engines
       content.replace(new_chunk.mask)
     end
 
-    private 
+    private
 
     # Never create engines by constructor - use apply_to instead
-    def initialize(content) 
+    def initialize(content)
       @content = content
     end
 
@@ -34,7 +34,7 @@ module Engines
       @content.as_utf8
       redcloth = RedCloth.new(@content, [:hard_breaks] + @content.options[:engine_opts])
       redcloth.filter_html = false
-      redcloth.no_span_caps = false  
+      redcloth.no_span_caps = false
       html = redcloth.to_html(:textile)
     end
   end
@@ -71,7 +71,7 @@ module Engines
         @content.options[:renderer].s5_theme = my_content.s5_theme
         my_content.to_s5
       else
-        (t = Time.now; nil)        
+        (t = Time.now; nil)
         html = Maruku.new(text,
              {:math_enabled => true,
               :math_numbered => ['\\[','\\begin{equation}']}).to_html

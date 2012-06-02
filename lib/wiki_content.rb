@@ -147,7 +147,7 @@ class WikiContent < ActiveSupport::SafeBuffer
     if @options[:engine] == Engines::MarkdownPNG
       @options[:png_url] =
          @options[:mode] == :export ? 'files/pngs/' :
-           (@url_generator.url_for :controller => 'file', :web => @web.address, 
+           (@url_generator.url_for :controller => 'file', :web => @web.address,
              :action => 'file', :id => 'pngs', :only_path => true) + '/'
     end
 

@@ -8,6 +8,8 @@ class Web < ActiveRecord::Base
 
   has_many :revisions,  :through => :pages
 
+  has_many :discussion_posts, :dependent => :destroy, :order => 'created_at DESC'
+
   ## Hooks
 
   before_save :sanitize_markup

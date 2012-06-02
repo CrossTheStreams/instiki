@@ -1,0 +1,6 @@
+secret
+log
+cache/views
+db/development.db*
+db/production.db*
+

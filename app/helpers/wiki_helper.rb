@@ -38,7 +38,7 @@ module WikiHelper
     link_to_history(@page, 'History',
         {:class => 'navlink', :accesskey => 'S', :id => 'history', :rel => 'nofollow'})
   end
-            
+
   def forward
     if @revision_number < @page.rev_ids.size - 1
       link_to('Forward in time', 
@@ -51,7 +51,7 @@ module WikiHelper
             " <span class='revisions'>(to current)</span>".html_safe
     end
   end
-    
+
   def back_for_revision
     link_to('Back in time',
         {:web => @web.address, :action => 'revision', :id => @page.name, :rev => @revision_number - 1},
@@ -66,12 +66,12 @@ module WikiHelper
         {:class => 'navlink', :accesskey => 'B', :id => 'to_previous_revision', :rel => 'nofollow'}) +
         " <span class='revisions'>(#{@page.rev_ids.size - 1} #{@page.rev_ids.size - 1 == 1 ? 'revision' : 'revisions'})</span>".html_safe
   end
-  
+
   def current_revision
     link_to('See current', {:web => @web.address, :action => 'show', :id => @page.name},
         {:class => 'navlink', :id => 'to_current_revision'})
   end
-  
+
   def see_or_hide_changes_for_revision
     link_to(@show_diff ? 'Hide changes' : 'See changes', 
         {:web => @web.address, :action => 'revision', :id => @page.name, :rev => @revision_number, 
@@ -84,7 +84,7 @@ module WikiHelper
         {:web => @web.address, :action => 'show', :id => @page.name, :mode => (@show_diff ? nil : 'diff') },
         {:class => 'navlink', :accesskey => 'C', :id => 'see_changes', :rel => 'nofollow'})
   end
-  
+
   def rollback
     link_to('Rollback', 
         {:web => @web.address, :action => 'rollback', :id => @page.name, :rev => @revision_number},

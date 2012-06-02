@@ -1,0 +1,24 @@
+<h1>Discussion Page</h1>
+
+<% form_for(@new_post) do |f| %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+
+<%= will_paginate @discussion_posts %>
+<div class='discussion'>
+<% for post in @discussion_posts %>
+  <div class='discussion_post'>
+    <h3><%=h post.author %></h3>
+    <span class='post_date'><%=h post.created_at.strftime "%H:%M -  %m/%d/%Y" %></span>
+    <div class='post_content'>
+      <%= render_discussion_post(post) %>
+      <span class='edit'><%= link_to "Edit", edit_discussion_post_url(post) %></span>
+    </div>
+  </div>
+<% end %>
+<%= will_paginate @discussion_posts %>
+</div>

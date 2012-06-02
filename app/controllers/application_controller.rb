@@ -23,6 +23,12 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  # See comment in discussion posts controller
+  #def cache_author
+
+    #author_name =
+  #end
+
   def xhtml_enabled?
     in_a_web? and [:markdownMML, :markdownPNG, :markdown].include?(@web.markup)
   end
@@ -33,7 +39,7 @@ class ApplicationController < ActionController::Base
        'xhtml'
     else
       'html'
-    end       
+    end
   end
 
   def darken(s)
@@ -41,7 +47,7 @@ class ApplicationController < ActionController::Base
      s.scan( %r(\w{#{n},#{n}}) ).collect {|a| (a.hex * 2/3).to_s(16).rjust(n,'0')}.join
   end
 
-  def check_authorization    
+  def check_authorization
     redirect_to(:controller => 'wiki', :action => 'login',
                 :web => @web_name) if in_a_web? and authorization_needed? and not authorized?
   end
@@ -98,7 +104,7 @@ class ApplicationController < ActionController::Base
     'text/plain'               => 'inline',
     'application/zip'          => 'attachment'
   } unless defined? DISPOSITION
- 
+
   def determine_file_options_for(file_name, original_options = {})
     original_options[:type] ||= (FILE_TYPES[File.extname(file_name)] or 'application/octet-stream')
     original_options[:disposition] ||= (DISPOSITION[original_options[:type]] or 'attachment')
@@ -107,7 +113,7 @@ class ApplicationController < ActionController::Base
             ( request.remote_addr == LOCALHOST || defined?(PhusionPassenger) )
     original_options
   end
-  
+
   def send_file(file, options = {})
     determine_file_options_for(file, options)
     super(file, options)
@@ -229,7 +235,7 @@ class ApplicationController < ActionController::Base
   def in_a_web?
     not @web_name.nil?
   end
-  
+
   def authorization_needed?
     not %w(login authenticate feeds published atom_with_headlines atom_with_content file blahtex_png).include?(action_name)
   end
@@ -261,16 +267,16 @@ module Mime
 
   # Add XHTML
   XHTML  = Type.new "application/xhtml+xml", :xhtml
-  
+
   # Fix xhtml and html lookups
   LOOKUP["text/html"]             = HTML
   LOOKUP["application/xhtml+xml"] = XHTML
 end
 
 module MathPlayerHack
-    def charset=(encoding)
-      self.headers["Content-Type"] = "#{content_type || Mime::HTML}"
-    end
+  def charset=(encoding)
+    self.headers["Content-Type"] = "#{content_type || Mime::HTML}"
+  end
 end
 
 module Instiki

@@ -21,7 +21,7 @@ class PageRenderer
 
   def revision=(r)
     @revision = r
-    @display_content = @display_published = @wiki_words_cache = @wiki_includes_cache = 
+    @display_content = @display_published = @wiki_words_cache = @wiki_includes_cache =
         @wiki_references_cache = nil
   end
 
@@ -97,7 +97,7 @@ class PageRenderer
   def wiki_words
     @wiki_words_cache ||= find_wiki_words(display_content) 
   end
-  
+
   def find_wiki_words(rendering_result)
     the_wiki_words = wiki_links(rendering_result)
     # Exclude backslash-escaped wiki words, such as \WikiWord, as well as links to files 
@@ -111,13 +111,13 @@ class PageRenderer
   def wiki_files
     @wiki_files_cache ||= find_wiki_files(display_content) 
   end
-    
+
   def find_wiki_files(rendering_result)
      the_wiki_files = wiki_links(rendering_result)
      the_wiki_files.delete_if { |link| ![:pic, :file, :audio, :video].include?(link.link_type) }
      the_wiki_files.map { |link| ( link.page_name ) }.uniq
   end
-  
+
   def wiki_links(rendering_result)
      rendering_result.find_chunks(WikiChunk::WikiLink)
   end
@@ -132,16 +132,16 @@ class PageRenderer
   # that *doesn't* already exists as a page in the web.
   def unexisting_pages
     wiki_words - existing_pages
-  end  
+  end
 
   private
-  
+
   def render(options = {})
     rendering_result = WikiContent.new(@revision, @@url_generator, options).render!
     update_references(rendering_result) if options[:update_references]
     rendering_result
   end
-  
+
   def update_references(rendering_result)
     WikiReference.delete_all ['page_id = ?', @revision.page_id]
 
@@ -150,7 +150,7 @@ class PageRenderer
     wiki_words = find_wiki_words(rendering_result)
     # TODO it may be desirable to save links to files and pictures as WikiReference objects
     # present version doesn't do it
-    
+
     wiki_words.each do |referenced_name|
       # Links to self are always considered linked
       if referenced_name == @revision.page.name

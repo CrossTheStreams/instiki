@@ -32,7 +32,7 @@ class WikiController < ApplicationController
   def authenticate
     if password_check(params['password'])
       redirect_home
-    else 
+    else
       flash[:info] = password_error(params['password'])
       redirect_to :action => 'login', :web => @web_name
     end
@@ -41,7 +41,7 @@ class WikiController < ApplicationController
   def login
     # to template
   end
-  
+
   def web_list
     @webs = wiki.webs.values.sort_by { |web| web.name }
   end
@@ -53,7 +53,7 @@ class WikiController < ApplicationController
     @page_names_by_author = @web.page_names_by_author
     @authors = @page_names_by_author.keys.sort
   end
-  
+
   def file_list
     sort_order = params['sort_order'] || 'file_name'
     case sort_order
@@ -66,7 +66,7 @@ class WikiController < ApplicationController
     end
     @file_list = @web.file_list(sort_order)
   end
-  
+
   def export_html
     export_pages_as_zip(html_ext) do |page| 
       renderer = PageRenderer.new(page.current_revision)
@@ -76,7 +76,7 @@ class WikiController < ApplicationController
 <head>
   <title>#{page.plain_name} in #{@web.name}</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  
+
   <script src="public/javascripts/page_helper.js" type="text/javascript"></script> 
   <link href="public/stylesheets/instiki.css" media="all" rel="stylesheet" type="text/css" />
   <link href="public/stylesheets/syntax.css" media="all" rel="stylesheet" type="text/css" />
@@ -86,9 +86,9 @@ class WikiController < ApplicationController
     }
     a:visited.existingWikiWord {
       color: ##{darken(@web ? @web.color : "393")};
-    }   
+    }
   </style>
-  
+
   <style type="text/css"><!--/*--><![CDATA[/*><!--*/    
     #{@web ? @web.additional_style : ''}
   /*]]>*/--></style>
@@ -161,7 +161,7 @@ EOL
     @page_names_that_are_wanted = @pages_in_category.wanted_pages
     @pages_that_are_orphaned = @pages_in_category.orphaned_pages
   end
-  
+
   def recently_revised
     parse_category
     @pages_by_revision = @pages_in_category.by_revision
@@ -184,7 +184,7 @@ EOL
   def atom_with_headlines
     render_atom(hide_description = true)
   end
-  
+
   def tex_list
     return unless is_post
     if [:markdownMML, :markdownPNG, :markdown].include?(@web.markup)
@@ -221,7 +221,7 @@ EOL
   end
 
   # Within a single page --------------------------------------------------------
-  
+
   def cancel_edit
     @page.unlock
     redirect_to_page(@page_name)
@@ -236,11 +236,11 @@ EOL
       @page.lock(Time.now, @author)
     end
   end
-  
+
   def locked
     # to template
   end
-  
+
   def new
     # to template
   end
@@ -287,7 +287,7 @@ EOL
         end
      end
   end
-  
+
   def revision
     get_page_and_revision
     @show_diff = (params[:mode] == 'diff')
@@ -308,12 +308,12 @@ EOL
     return unless is_post
     author_name = params['author'].purify
     author_name = 'AnonymousCoward' if author_name =~ /^\s*$/
-    
+
     begin
       the_content = params['content'].purify
       prev_content = ''
       filter_spam(the_content)
-      cookies['author'] = { :value => author_name.dup.as_bytes, :expires => Time.utc(2030) }
+      cookies['author'] = { :value => author_name.dup.as_bytes, :expires => Time.now + 30.years }
       if @page
         new_name = params['new_name'] ? params['new_name'].purify : @page_name
         new_name = @page_name if new_name.empty?
@@ -429,7 +429,7 @@ EOL
   def do_caching?
     flash.empty?
   end
-  
+
   def load_page
     @page_name = params['id'] ? params['id'].purify : nil
     @page = @wiki.read_page(@web_name, @page_name) if @page_name
@@ -459,7 +459,6 @@ EOL
   end
 
   def export_pages_as_zip(file_type, &block)
-    
     file_prefix = "#{@web.address}-#{file_type}-"
     timestamp = @web.revised_at.strftime('%Y-%m-%d-%H-%M-%S')
     file_path = @wiki.storage_path.join(file_prefix + timestamp + '.zip')

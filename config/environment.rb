@@ -3,7 +3,7 @@
 ####
 
 # Make sure we are using the latest rexml
-rexml_versions = ['', File.join(File.dirname(__FILE__), '..', 'vendor', 'plugins', 'rexml', 'lib', '')].collect { |v| 
+rexml_versions = ['', File.join(File.dirname(__FILE__), '..', 'vendor', 'plugins', 'rexml', 'lib', '')].collect { |v|
   `ruby -r "#{v + 'rexml/rexml'}" -e 'p REXML::VERSION'`.split('.').collect {|n| n.to_i} }
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'vendor', 'plugins', 'rexml', 'lib')) if (rexml_versions[0] <=> rexml_versions[1]) == -1
 
@@ -18,17 +18,17 @@ Rails::Initializer.run do |config|
   #   in a file, for reuse between server restarts. If you want to
   #   change the key, just delete the file, and it will be regenerated
   #   on the next restart. Doing so will invalitate all existing sessions.
-  secret_file = Rails.root.join("secret")  
-  if File.exist?(secret_file)  
-    secret = secret_file.read  
-  else  
+  secret_file = Rails.root.join("secret")
+  if File.exist?(secret_file)
+    secret = secret_file.read
+  else
     secret =  ActiveSupport::SecureRandom.hex(64)
-    File.open(secret_file, 'w', 0600) { |f| f.write(secret) }  
-  end  
-  config.action_controller.session = { 
+    File.open(secret_file, 'w', 0600) { |f| f.write(secret) }
+  end
+  config.action_controller.session = {
     :key => "instiki_session",
     :secret => secret
-   } 
+   }
 
   # Don't do file system STAT calls to check to see if the templates have changed.
   #config.action_view.cache_template_loading = true
@@ -64,6 +64,6 @@ require 'caching_stuff'
 require 'logging_stuff'
 require 'rack_stuff'
 
-#Additional Mime-types 
+#Additional Mime-types
 mime_types = YAML.load_file(File.join(File.dirname(__FILE__), 'mime_types.yml'))
 Rack::Mime::MIME_TYPES.merge!(mime_types)

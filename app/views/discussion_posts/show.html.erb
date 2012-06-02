@@ -1,0 +1,18 @@
+<p>
+  <b>Author:</b>
+  <%=h @discussion_post.author %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%=h @discussion_post.content %>
+</p>
+
+<p>
+  <b>Web:</b>
+  <%=h @discussion_post.web_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_discussion_post_path(@discussion_post) %> |
+<%= link_to 'Back', discussion_posts_path %>

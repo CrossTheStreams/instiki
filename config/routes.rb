@@ -12,6 +12,8 @@ end
   id_regexp = /.+/
 
 ActionController::Routing::Routes.draw do |map|
+  map.resources :discussion_posts
+
   map.connect 'create_system', :controller => 'admin', :action => 'create_system'
   map.connect 'create_web', :controller => 'admin', :action => 'create_web'
   map.connect 'delete_web', :controller => 'admin', :action => 'delete_web'

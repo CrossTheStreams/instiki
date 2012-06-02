@@ -521,3 +521,47 @@ span.theorem_label {font-style:normal; font-weight:bold;}
   font-weight: bold;
 }
 [actiontype="toggle"]:hover {text-shadow: #ccc 2px 2px 5px;}
+
+
+div.discussion_post { padding-bottom: 26px; }
+
+div.discussion_post div.post_content {
+  padding: 12px;
+  margin-bottom: 18px;
+}
+
+form.new_discussion_post { margin-bottom: 80px; }
+
+div.discussion_post ul, ol { padding-bottom: 8px; }
+
+div.discussion_post > h3 {
+  display: inline;
+  margin-bottom: 5px;
+}
+
+div.discussion_post span.post_date {
+  margin-left: 40px;
+  font-style: italic;
+}
+
+div.discussion_post span.edit {
+  margin-left: 12px
+}
+
+div.discussion_post li {
+  margin-bottom: -10px;
+  padding: 0;
+}
+
+form textarea#discussion_post_content {
+  width: 90%;
+  height: 275px;
+}
+
+div.pagination {
+  text-align: right;
+  margin-bottom: 12px;
+  margin-right: 20px;
+}
+
+

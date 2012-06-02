@@ -10,3 +10,7 @@ gem "nokogiri"
 gem "rake"
 gem "rdoc"
 gem "json"
+
+#gem "formtastic"
+gem "will_paginate", '~>2.3.16'
+gem "pry"
